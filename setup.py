@@ -7,7 +7,7 @@ import sys
 import setuptools
 
 PACKAGE_NAME = "pcbflow"
-MINIMUM_PYTHON_VERSION = "3.6"
+MINIMUM_PYTHON_VERSION = (3, 6, 0)
 
 loc = os.path.abspath(os.path.dirname(__file__))
 
@@ -38,8 +38,14 @@ for line in requirements:
 
 def check_python_version():
     """Exit when the Python version is too low."""
-    if sys.version < MINIMUM_PYTHON_VERSION:
-        sys.exit("Python {0}+ is required.".format(MINIMUM_PYTHON_VERSION))
+    if (
+        sys.version_info.major < MINIMUM_PYTHON_VERSION[0]
+        or sys.version_info.minor < MINIMUM_PYTHON_VERSION[1]
+    ):
+        sys.exit(
+            f"Python {MINIMUM_PYTHON_VERSION[0]}.{MINIMUM_PYTHON_VERSION[1]}+"
+            "is required."
+        )
 
 
 def read_package_variable(key, filename="__init__.py"):
